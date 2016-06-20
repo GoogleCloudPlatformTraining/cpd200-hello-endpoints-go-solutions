@@ -17,12 +17,21 @@ type NameReq struct {
 	Name string	`json:"name"`
 }
 
+type PeriodReq struct {
+	Period string	`json:"period"`
+	Name string	`json:"name"`
+}
+
 func (h *HelloWorldApi) SayHello(c context.Context) (*Hello, error) {
-	return &Hello{Greeting:"Hello World"}, nil
+	return &Hello{Greeting:"Hello Endpoints"}, nil
 }
 
 func (h *HelloWorldApi) SayHelloByName(c context.Context, r *NameReq) (*Hello, error) {
-	return &Hello{Greeting:"Hello World " + r.Name}, nil
+	return &Hello{Greeting:"Hello " + r.Name}, nil
+}
+
+func (h *HelloWorldApi) GreetByPeriod(c context.Context, r *PeriodReq) (*Hello, error) {
+	return &Hello{Greeting:"Good " + r.Period + " " + r.Name}, nil
 }
 
 func init() {
@@ -43,5 +52,6 @@ func init() {
 
 	register("SayHello", "sayHello", "GET", "sayHello", "Say hello")
 	register("SayHelloByName", "sayHelloByName", "GET", "sayHelloByName", "Say hello by name")
+	register("GreetByPeriod", "greetByPeriod", "GET", "greetByPeriod", "Say hello by period and name")
 	endpoints.HandleHTTP()
 }
